@@ -1,4 +1,4 @@
-package xyz.letus.framework.ioc.annotation;
+package xyz.letus.framework.aop.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,15 +6,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 依赖注入注解
- * @ClassName: Controller
+ * 切面
+ * @ClassName: Aspect
  * @Description: TODO
  * @author 潘广伟(笨笨)
- * @date 2015年9月19日
+ * @date 2016年3月7日
  *
  */
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Inject {
+public @interface Aspect {
 	String value() default "";
 }

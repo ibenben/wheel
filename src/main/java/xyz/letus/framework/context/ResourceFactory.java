@@ -30,8 +30,7 @@ public class ResourceFactory {
 	 * @throws
 	 */
 	public static void parse(String fileName) throws FileNotFoundException, IOException {
-//		InputStream stream=Thread.currentThread().getClass().getResourceAsStream(fileName); 
-		InputStream stream=Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);  
+		InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);  
 		Properties properties = new Properties();
 		properties.load(stream);
 		Enumeration<?> e = properties.propertyNames();// 得到配置文件的名字

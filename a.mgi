@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <CommunicationClass name="xyz.letus.framework.ioc.BeanFactory"
+        x="624" y="295">
+        <Communication destinationClassName="xyz.letus.framework.ioc.ReflectionFactory"/>
+        <Communication destinationClassName="xyz.letus.framework.ioc.IocHelper"/>
+        <Communication destinationClassName="xyz.letus.framework.ioc.ClassFactory"/>
+    </CommunicationClass>
+    <CommunicationClass name="xyz.letus.framework.ioc.ReflectionFactory"
+        x="418" y="408"/>
+    <CommunicationClass
+        name="xyz.letus.framework.context.ResourceFactory" x="348" y="164"/>
+    <CommunicationClass name="xyz.letus.framework.ioc.IocHelper" x="321" y="293">
+        <Communication destinationClassName="xyz.letus.framework.ioc.ReflectionFactory">
+            <Point x="363" y="427"/>
+        </Communication>
+        <Communication destinationClassName="xyz.letus.framework.ioc.annotation.Inject"/>
+    </CommunicationClass>
+    <CommunicationClass name="xyz.letus.framework.ioc.annotation.Inject"
+        x="251" y="407"/>
+    <CommunicationClass
+        name="xyz.letus.framework.context.ApplicationContext" x="614" y="162">
+        <Communication destinationClassName="xyz.letus.framework.ioc.BeanFactory"/>
+        <Communication destinationClassName="xyz.letus.framework.context.ResourceFactory"/>
+    </CommunicationClass>
+    <CommunicationClass name="xyz.letus.framework.ioc.ClassFactory"
+        x="634" y="423">
+        <Communication destinationClassName="xyz.letus.framework.ioc.annotation.Component"/>
+        <Communication destinationClassName="xyz.letus.framework.ioc.ClassLoader"/>
+    </CommunicationClass>
+    <CommunicationClass
+        name="xyz.letus.framework.ioc.annotation.Component" x="724" y="537"/>
+    <CommunicationClass name="xyz.letus.framework.ioc.ClassLoader"
+        x="553" y="532"/>
+</ClassDiagram>

@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
+
+import xyz.letus.framework.aop.AspectManager;
+import xyz.letus.framework.util.ClassFactory;
+import xyz.letus.framework.util.ReflectionFactory;
 
 
 /**
@@ -16,7 +19,7 @@ import java.util.Set;
  *
  */
 public class BeanFactory {
-	private static final Map<String, Object> BEAN_MAP = new HashMap<String, Object>();
+	private static Map<String, Object> BEAN_MAP = new HashMap<String, Object>();
 	
 	/**
 	 * 创建所有托管的实例
@@ -27,17 +30,25 @@ public class BeanFactory {
 	 * @throws
 	 */
 	public static void createInstance(List<String> packages){
-		for (String packagePath : packages) {
-			Map<String, Class<?>> beanClasses = ClassFactory
-					.getBeanClasses(packagePath);
-			for (Entry<String, Class<?>> entry : beanClasses.entrySet()) {
-				Object obj = ReflectionFactory.newInstance(entry.getValue());
-				
-				BEAN_MAP.put(entry.getKey(), obj);
-			}
+		ClassFactory classFactory = new ClassFactory(packages);
+		Map<String, Class<?>> componentClasses = classFactory.getComponentClasses();
+		Map<String, Class<?>> aspectClasses = classFactory.getAspectClasses();
+		
+		//对普通的托管类进行处理
+		for (Entry<String, Class<?>> entry : componentClasses.entrySet()) {
+			Object obj = ReflectionFactory.newInstance(entry.getValue());
+			
+			BEAN_MAP.put(entry.getKey(), obj);
 		}
 		
+		//依赖注入
 		IocHelper.inject(BEAN_MAP);
+		
+		//切面处理
+		AspectManager aspectManager = new AspectManager(BEAN_MAP);
+		aspectManager.parse(aspectClasses);
+		BEAN_MAP = aspectManager.getBeanMap();
+		
 	}
 	
 	
